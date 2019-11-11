@@ -1,19 +1,17 @@
 package com.example.brackets;
 
-public class Program {
-    public static void main(String[] args) {
-        System.out.println(
-                isCorrectBracketsSequence("()()[]{[]}")
-        );
-    }
-
+public class BracketsSequence {
     private static boolean isCorrectBracketsSequence(String sequence) {
         if (sequence.isEmpty()) {
             return true;
         }
         char openBracket = sequence.charAt(0);
-        int index = findPair(sequence, openBracket);
-
+        int pairPosition = findPair(sequence, openBracket);
+        if (pairPosition == -1) {
+            return false;
+        }
+        return isCorrectBracketsSequence(sequence.substring(1, pairPosition - 1))
+                && isCorrectBracketsSequence(sequence.substring(pairPosition));
     }
 
     private static int findPair(String sequence, char openBracket) {
@@ -32,8 +30,7 @@ public class Program {
 
     private static boolean matches(char openingBracket, char closingBracket) {
         return openingBracket == '(' && closingBracket == ')'
-                || openingBracket == '[' && closingBracket == ']';
+                || openingBracket == '[' && closingBracket == ']'
+                || openingBracket == '{' && closingBracket == '}';
     }
-
-
 }
